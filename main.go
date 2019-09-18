@@ -56,8 +56,8 @@ func main() {
 	mainPage := webview.New(webview.Settings{
 		Title:                  "PDDComments",
 		URL:                    "data:text/html," + url.PathEscape(pages.IndexHtml),
-		Width:                  450,
-		Height:                 685,
+		Width:                  1200,
+		Height:                 620,
 		ExternalInvokeCallback: eventHandler,
 	})
 	main := types.Application{
@@ -168,6 +168,7 @@ func generatePrice(data string) string {
 func getCommentResult(itemId, minLength, commentPrefix, commentSuffix, commentFilter string) string {
 	comment := exeComment(AK, itemId, minLength, commentFilter, "")
 	comment = strings.Replace(comment, "'", "‘", -1)
+	comment = strings.Replace(comment, "\"", "“", -1)
 	return commentPrefix + comment + commentSuffix
 }
 

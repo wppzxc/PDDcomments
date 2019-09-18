@@ -18,10 +18,12 @@ func GetGoodsPrice(itemId string, discount string) string {
 		return "0"
 	}
 	tmpPrice := dom.Find("div[data-active=red]").Find("span").First().Text()
+	fmt.Println("tmp price is : ", tmpPrice)
 	tmpPrice = strings.Replace(tmpPrice, "￥", "", -1)
 	oldPrice, _ := strconv.ParseFloat(tmpPrice, 32)
 	dis, _ := strconv.ParseFloat(discount, 32)
-	newPrice := fmt.Sprintf("%.2f", oldPrice * dis)
+	newPrice := fmt.Sprintf("%.1f", oldPrice * dis)
+	fmt.Println("new price is : ", newPrice)
 	return newPrice
 }
 

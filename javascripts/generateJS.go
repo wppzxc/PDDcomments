@@ -5,5 +5,5 @@ var OutputCommentJS = `!function () {
 }();`
 
 var OutputPriceJS = `!function () {
-    drawPic('%s')
+    drawPrice('%s')
 }();`

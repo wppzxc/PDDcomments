@@ -6,7 +6,7 @@ import (
 )
 
 func TestGetGoodsPrice(t *testing.T) {
-	itemId := "2518027055"
+	itemId := "1433121973"
 	str := "1234567890.abcxyz"
 	fmt.Println([]byte(str))
 	price := GetGoodsPrice(itemId, "0.5")
