@@ -4,4 +4,4 @@ var ResetAKJS = `!function () {document.cookie = "PDDAccessToken=;expires=Thu, 0
 
 var LoginJS = `!function () {window.external.invoke('cookie|||'+document.cookie)}();`
 
-var CloseLoginPage = `!function () {document.body.innerText="登录成功，请关闭此页面！"}()`
+var CloseLoginPage = `!function () {document.write('<h1>登录成功，请关闭此页面！</h1>')}()`
