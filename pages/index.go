@@ -318,7 +318,7 @@ var IndexHtml = `<!DOCTYPE html>
         let base64Str = canvas.toDataURL("image/jpeg", 1.0);
         let imageStr = base64Str.replace('data:image/jpeg;base64,', '');
         let inputData = 'autoDownloadPic|||' + imageStr;
-        window.external.invoke(imageStr);
+        window.external.invoke(inputData);
     }
 </script>
 </body>

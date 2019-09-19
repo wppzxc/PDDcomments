@@ -100,7 +100,7 @@ func main() {
 
 func eventHandler(w webview.WebView, data string) {
 	strs := strings.Split(data, "|||")
-	fmt.Println("event is : ", data)
+	fmt.Println("event is : ", strs[0])
 	switch strs[0] {
 	case "cookie":
 		cookies := parseData(data)
