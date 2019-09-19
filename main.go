@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"github.com/wpp/PDDComments/javascripts"
@@ -8,6 +9,7 @@ import (
 	"github.com/wpp/PDDComments/pkg/utils"
 	"github.com/wpp/PDDComments/types"
 	"github.com/zserge/webview"
+	"io/ioutil"
 	"math/rand"
 	"net/url"
 	"os"
@@ -24,6 +26,8 @@ var newPriceCh = make(chan string)
 
 func main() {
 	rand.Seed(time.Now().Unix())
+	// 初始化配置文件
+	utils.InitConfig("./PDDComments.json")
 	loginPage := webview.New(webview.Settings{
 		Title:                  "Login",
 		URL:                    "https://mobile.yangkeduo.com/login.html",
@@ -53,9 +57,15 @@ func main() {
 		os.Exit(0)
 	}
 	fmt.Println("finish login ...")
+	// 加载配置文件
+	pd := &types.PageData{}
+	data, _ := ioutil.ReadFile("./PDDComments.json")
+	_ = json.Unmarshal(data, pd)
+	html := fmt.Sprintf(pages.IndexHtml, pd.PicPriceX, pd.PicPriceY, pd.PicPriceSize, pd.PicAccountName, pd.PicAccountX, pd.PicAccountY,pd.PicAccountSize)
+	fmt.Println(html)
 	mainPage := webview.New(webview.Settings{
 		Title:                  "PDDComments",
-		URL:                    "data:text/html," + url.PathEscape(pages.IndexHtml),
+		URL:                    "data:text/html," + url.PathEscape(html),
 		Width:                  1200,
 		Height:                 620,
 		ExternalInvokeCallback: eventHandler,
@@ -103,10 +113,15 @@ func eventHandler(w webview.WebView, data string) {
 			return
 		}
 	case "generate":
+		utils.SaveConfig("./PDDComments.json", strs[1])
 		comment := generateComment(strs[1])
 		price := generatePrice(strs[1])
 		newCommentCh <- comment
 		newPriceCh <- price
+	case "autoDownloadPic":
+		if err := autoDownloadPic(strs[1]); err != nil {
+			fmt.Println(err)
+		}
 	}
 }
 
@@ -166,16 +181,23 @@ func generatePrice(data string) string {
 }
 
 func getCommentResult(itemId, minLength, commentPrefix, commentSuffix, commentFilter string) string {
-	comment := exeComment(AK, itemId, minLength, commentFilter, "")
+	comment := exeComment(AK, itemId, minLength, commentFilter, "", 0)
 	comment = strings.Replace(comment, "'", "‘", -1)
 	comment = strings.Replace(comment, "\"", "“", -1)
 	return commentPrefix + comment + commentSuffix
 }
 
-func exeComment(key string, itemId string, minLength string, filter string, comment string) string {
+func exeComment(key string, itemId string, minLength string, filter string, comment string, failTimes int) string {
+	if failTimes > 30 {
+		return "登录失效，请重新登录！"
+	}
 	page := rand.Intn(29) + 1
 	length, _ := strconv.Atoi(minLength)
 	cms := utils.GetOnePageComments(key, itemId, page)
+	if len(cms) == 0 {
+		failTimes ++
+		return exeComment(key, itemId, minLength, filter, comment, failTimes)
+	}
 	cms = utils.RemoveEmptyComments(cms)
 	cms = utils.RemoveLowScoreComments(cms)
 	cms = utils.FilterKeys(filter, cms)
@@ -185,6 +207,20 @@ func exeComment(key string, itemId string, minLength string, filter string, comm
 	if utf8.RuneCountInString(comment) >= length {
 		return comment
 	} else {
-		return exeComment(key, itemId, minLength, filter, comment)
+		return exeComment(key, itemId, minLength, filter, comment, failTimes)
 	}
+}
+
+func autoDownloadPic(base64Str string) error {
+	d, _ := base64.StdEncoding.DecodeString(base64Str)
+	timestamp := time.Now().Unix()
+	filename := strconv.FormatInt(timestamp, 10) + ".jpeg"
+	os.Remove(filename)
+	if _, err := os.Create(filename); err != nil {
+		return err
+	}
+	if err := ioutil.WriteFile(filename, d, 0755); err != nil {
+		fmt.Println(err)
+	}
+	return nil
 }

@@ -5,17 +5,16 @@ import (
 	"fmt"
 	"github.com/wpp/PDDComments/types"
 	"io/ioutil"
-	"math/rand"
 	"net/http"
-	"strconv"
+	"os"
 	"strings"
-	"unicode/utf8"
 )
 
 const (
 	EmptyComment = "此用户未填写文字评论"
 	FullScore = 5
 	commentUrl = "https://mobile.yangkeduo.com/proxy/api/reviews/%s/list?page=%d&size=10&enable_video=1&enable_group_review=1"
+	configFile = "./PDDComments.json"
 )
 
 func RemoveEmptyComments(comments []types.Comment) []types.Comment {
@@ -83,24 +82,23 @@ func FilterKeys(filter string, comments []types.Comment) []types.Comment {
 	return result
 }
 
-func GenerateComment(minLength string, comments []types.Comment) string {
-	result := []byte{}
-	lastComment := ""
-	length, _ := strconv.Atoi(minLength)
-	size := len(comments)
-	for _, c := range comments {
-		fmt.Println(c)
-		i := rand.Intn(size -1) + 1
-		if comments[i].Comment == lastComment {
-			continue
-		}
-		result = append(result, comments[i].Comment...)
-		lastComment = comments[i].Comment
-		fmt.Println(utf8.RuneCountInString(string(result)))
-		if utf8.RuneCountInString(string(result)) > length {
-			return string(result)
-		}
-		result = append(result, "，"...)
+func InitConfig(filename string) {
+	if len(filename) == 0 {
+		filename = configFile
 	}
-	return string(result)
+	_, err := os.Stat(filename)
+	fmt.Println(err)
+	if os.IsNotExist(err) {
+		os.Create(filename)
+	}
+}
+
+func SaveConfig(filename string, json string) {
+	if len(filename) == 0 {
+		filename = configFile
+	}
+	InitConfig(filename)
+	if err := ioutil.WriteFile(filename, []byte(json), 0755); err != nil {
+		fmt.Println(err)
+	}
 }

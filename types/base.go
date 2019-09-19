@@ -7,6 +7,13 @@ type PageData struct {
 	CommentFoot string `json:"comment_foot"`
 	CommentFilter string `json:"comment_filter"`
 	CommentDiscount string `json:"comment_discount"`
+	PicPriceX string `json:"pic_price_x"`
+	PicPriceY string `json:"pic_price_y"`
+	PicPriceSize string `json:"pic_price_size"`
+	PicAccountX string `json:"pic_account_x"`
+	PicAccountY string `json:"pic_account_y"`
+	PicAccountSize string `json:"pic_account_size"`
+	PicAccountName string `json:"pic_account_name"`
 }
 
 type Comment struct {
