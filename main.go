@@ -28,39 +28,44 @@ func main() {
 	rand.Seed(time.Now().Unix())
 	// 初始化配置文件
 	utils.InitConfig("./PDDComments.json")
-	loginPage := webview.New(webview.Settings{
-		Title:                  "Login",
-		URL:                    "https://mobile.yangkeduo.com/login.html",
-		ExternalInvokeCallback: eventHandler,
-	})
-	login := types.Application{
-		WebApp: loginPage,
-	}
-	go func() {
-		fmt.Println("reset ak ...")
-		time.Sleep(1 * time.Second)
-		login.RestAK()
-		fmt.Println("start login ...")
-		for {
-			login.Login()
-			if logined {
-				login.CloseLoginPage()
-				return
-			}
+	// 加载配置文件
+	pd := &types.PageData{}
+	data, _ := ioutil.ReadFile("./PDDComments.json")
+	_ = json.Unmarshal(data, pd)
+	
+	if !utils.SkipLogin(pd){
+		loginPage := webview.New(webview.Settings{
+			Title:                  "Login",
+			URL:                    "https://mobile.yangkeduo.com/login.html",
+			ExternalInvokeCallback: eventHandler,
+		})
+		login := types.Application{
+			WebApp: loginPage,
 		}
-	}()
-	fmt.Println("start login ...")
-	login.WebApp.Run()
-	login.WebApp.Exit()
+		go func() {
+			fmt.Println("reset ak ...")
+			time.Sleep(1 * time.Second)
+			login.RestAK()
+			fmt.Println("start login ...")
+			for {
+				login.Login()
+				if logined {
+					login.CloseLoginPage()
+					return
+				}
+			}
+		}()
+		fmt.Println("start login ...")
+		login.WebApp.Run()
+		login.WebApp.Exit()
+	} else {
+		AK = pd.AccessKey
+	}
 	if len(AK) <= 0 {
 		fmt.Println("get AccessKey error : there is no AccessKey!")
 		os.Exit(0)
 	}
 	fmt.Println("finish login ...")
-	// 加载配置文件
-	pd := &types.PageData{}
-	data, _ := ioutil.ReadFile("./PDDComments.json")
-	_ = json.Unmarshal(data, pd)
 	html := fmt.Sprintf(pages.IndexHtml, pd.PicPriceX, pd.PicPriceY, pd.PicPriceSize, pd.PicAccountName, pd.PicAccountX, pd.PicAccountY,pd.PicAccountSize)
 	mainPage := webview.New(webview.Settings{
 		Title:                  "PDDComments",
@@ -112,7 +117,7 @@ func eventHandler(w webview.WebView, data string) {
 			return
 		}
 	case "generate":
-		utils.SaveConfig("./PDDComments.json", strs[1])
+		//utils.SaveConfig("./PDDComments.json", strs[1])
 		comment := generateComment(strs[1])
 		price := generatePrice(strs[1])
 		newCommentCh <- comment
@@ -151,6 +156,11 @@ func generateComment(data string) string {
 		fmt.Println("商品链接错误，无法解析商品id！")
 		return ""
 	}
+	pd.AccessKey = AK
+	pd.CheckItemId = itemId
+	jsonStr, _ := json.Marshal(pd)
+	// 更新配置文件
+	utils.SaveConfig("./PDDComments.json", string(jsonStr))
 	fmt.Println("pd is :", pd)
 	result := getCommentResult(itemId, pd.CommentNumber, pd.CommentHead, pd.CommentFoot, pd.CommentFilter)
 	fmt.Println("result comment is : ", result)
@@ -174,7 +184,7 @@ func generatePrice(data string) string {
 		return ""
 	}
 	fmt.Println("pd is :", pd)
-	result := utils.GetGoodsPrice(itemId, pd.CommentDiscount)
+	result := utils.GetGoodsPrice(AK, itemId, pd.CommentDiscount)
 	fmt.Println("result price is : ", result)
 	return result
 }

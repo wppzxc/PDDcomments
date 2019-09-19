@@ -9,10 +9,10 @@ import (
 )
 
 func TestGetGoodsPrice(t *testing.T) {
-	itemId := "1433121973"
+	itemId := "1382317056"
 	str := "1234567890.abcxyz"
 	fmt.Println([]byte(str))
-	price := GetGoodsPrice(itemId, "0.5")
+	price := GetGoodsPrice("C4UDY7AUKCHUC4A7Y7IQUMXRK4MF7DW5KXRVCNM7XNAXV7MVXEAQ10132a5", itemId, "0.5")
 	fmt.Println(price)
 }
 

@@ -102,3 +102,14 @@ func SaveConfig(filename string, json string) {
 		fmt.Println(err)
 	}
 }
+
+func SkipLogin(pd *types.PageData) bool {
+	if len(pd.CheckItemId) == 0 {
+		return false
+	}
+	cms := GetOnePageComments(pd.AccessKey, pd.CheckItemId, 1)
+	if len(cms) == 0 {
+		return false
+	}
+	return true
+}

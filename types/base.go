@@ -1,6 +1,8 @@
 package types
 
 type PageData struct {
+	AccessKey string `json:"access_key"`
+	CheckItemId string `json:"check_item_id"`
 	ItemLink string `json:"item_link"`
 	CommentNumber string `json:"comment_number"`
 	CommentHead string `json:"comment_head"`
