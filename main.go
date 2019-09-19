@@ -62,7 +62,6 @@ func main() {
 	data, _ := ioutil.ReadFile("./PDDComments.json")
 	_ = json.Unmarshal(data, pd)
 	html := fmt.Sprintf(pages.IndexHtml, pd.PicPriceX, pd.PicPriceY, pd.PicPriceSize, pd.PicAccountName, pd.PicAccountX, pd.PicAccountY,pd.PicAccountSize)
-	fmt.Println(html)
 	mainPage := webview.New(webview.Settings{
 		Title:                  "PDDComments",
 		URL:                    "data:text/html," + url.PathEscape(html),
@@ -203,7 +202,6 @@ func exeComment(key string, itemId string, minLength string, filter string, comm
 	cms = utils.FilterKeys(filter, cms)
 	index := rand.Intn(len(cms) - 1)
 	comment = comment + cms[index].Comment + "，"
-	fmt.Println("tmp comment is ：", comment)
 	if utf8.RuneCountInString(comment) >= length {
 		return comment
 	} else {
@@ -212,6 +210,7 @@ func exeComment(key string, itemId string, minLength string, filter string, comm
 }
 
 func autoDownloadPic(base64Str string) error {
+	fmt.Println("image is :", base64Str)
 	d, _ := base64.StdEncoding.DecodeString(base64Str)
 	timestamp := time.Now().Unix()
 	filename := strconv.FormatInt(timestamp, 10) + ".jpeg"
@@ -219,7 +218,7 @@ func autoDownloadPic(base64Str string) error {
 	if _, err := os.Create(filename); err != nil {
 		return err
 	}
-	if err := ioutil.WriteFile(filename, d, 0755); err != nil {
+	if err := ioutil.WriteFile(filename, d, 0666); err != nil {
 		fmt.Println(err)
 	}
 	return nil
