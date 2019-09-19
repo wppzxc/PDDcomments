@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/wpp/PDDComments/javascripts"
 	"github.com/wpp/PDDComments/pages"
+	"github.com/wpp/PDDComments/pkg/log"
 	"github.com/wpp/PDDComments/pkg/utils"
 	"github.com/wpp/PDDComments/types"
 	"github.com/zserge/webview"
@@ -23,9 +24,12 @@ var logined = false
 var AK = ""
 var newCommentCh = make(chan string)
 var newPriceCh = make(chan string)
+var logger = log.Logger
 
 func main() {
 	rand.Seed(time.Now().Unix())
+	logger.Println("Starting...")
+	defer log.Close()
 	// 初始化配置文件
 	utils.InitConfig("./PDDComments.json")
 	// 加载配置文件
@@ -43,10 +47,10 @@ func main() {
 			WebApp: loginPage,
 		}
 		go func() {
-			fmt.Println("reset ak ...")
+			logger.Println("reset ak ...")
 			time.Sleep(1 * time.Second)
 			login.RestAK()
-			fmt.Println("start login ...")
+			logger.Println("start login ...")
 			for {
 				login.Login()
 				if logined {
@@ -55,17 +59,16 @@ func main() {
 				}
 			}
 		}()
-		fmt.Println("start login ...")
+		logger.Println("start login ...")
 		login.WebApp.Run()
 		login.WebApp.Exit()
 	} else {
 		AK = pd.AccessKey
 	}
 	if len(AK) <= 0 {
-		fmt.Println("get AccessKey error : there is no AccessKey!")
-		os.Exit(0)
+		logger.Fatalf("Error : %s","Error in get AccessKey : there is no AccessKey!")
 	}
-	fmt.Println("finish login ...")
+	logger.Println("finish login ...")
 	html := fmt.Sprintf(pages.IndexHtml, pd.PicPriceX, pd.PicPriceY, pd.PicPriceSize, pd.PicAccountName, pd.PicAccountX, pd.PicAccountY,pd.PicAccountSize)
 	mainPage := webview.New(webview.Settings{
 		Title:                  "PDDComments",
@@ -79,21 +82,21 @@ func main() {
 	}
 	
 	go func() {
-		fmt.Println("start output comment")
+		logger.Println("start output comment")
 		for {
 			select {
 			case newPrice := <- newPriceCh:
-				fmt.Println("get new price : ", newPrice)
+				logger.Println("get new price : ", newPrice)
 				main.WebApp.Dispatch(func() {
 					if err := main.WebApp.Eval(fmt.Sprintf(javascripts.OutputPriceJS, newPrice)); err != nil {
-						fmt.Println(err)
+						logger.Printf("Error : %s",err)
 					}
 				})
 			case newComment := <- newCommentCh:
-				fmt.Println("get new comment : ", newComment)
+				logger.Println("get new comment : ", newComment)
 				main.WebApp.Dispatch(func() {
 					if err := main.WebApp.Eval(fmt.Sprintf(javascripts.OutputCommentJS, newComment)); err != nil {
-						fmt.Println(err)
+						logger.Printf("Error : %s",err)
 					}
 				})
 			}
@@ -105,26 +108,25 @@ func main() {
 
 func eventHandler(w webview.WebView, data string) {
 	strs := strings.Split(data, "|||")
-	fmt.Println("event is : ", strs[0])
+	logger.Println("event is : ", strs[0])
 	switch strs[0] {
 	case "cookie":
 		cookies := parseData(data)
 		ak, ok := cookies["PDDAccessToken"]
 		if ok {
-			fmt.Println("-------------------------AK is :", ak)
+			logger.Println("-------------------------AK is :", ak)
 			AK = ak
 			logined = true
 			return
 		}
 	case "generate":
-		//utils.SaveConfig("./PDDComments.json", strs[1])
 		comment := generateComment(strs[1])
 		price := generatePrice(strs[1])
 		newCommentCh <- comment
 		newPriceCh <- price
 	case "autoDownloadPic":
 		if err := autoDownloadPic(strs[1]); err != nil {
-			fmt.Println(err)
+			logger.Printf("Error : %s",err)
 		}
 	}
 }
@@ -147,13 +149,13 @@ func generateComment(data string) string {
 	}
 	u, err := url.Parse(pd.ItemLink)
 	if err != nil {
-		fmt.Println(err)
+		logger.Printf("Error : %s",err)
 		return ""
 	}
 	param, _ := url.ParseQuery(u.RawQuery)
 	itemId := param["goods_id"][0]
 	if len(itemId) == 0 {
-		fmt.Println("商品链接错误，无法解析商品id！")
+		logger.Printf("Error : 商品链接错误，无法解析商品id！: %s", pd.ItemLink)
 		return ""
 	}
 	pd.AccessKey = AK
@@ -161,9 +163,9 @@ func generateComment(data string) string {
 	jsonStr, _ := json.Marshal(pd)
 	// 更新配置文件
 	utils.SaveConfig("./PDDComments.json", string(jsonStr))
-	fmt.Println("pd is :", pd)
+	logger.Println("pd is :", pd)
 	result := getCommentResult(itemId, pd.CommentNumber, pd.CommentHead, pd.CommentFoot, pd.CommentFilter)
-	fmt.Println("result comment is : ", result)
+	logger.Println("result comment is : ", result)
 	return result
 }
 
@@ -174,18 +176,18 @@ func generatePrice(data string) string {
 	}
 	u, err := url.Parse(pd.ItemLink)
 	if err != nil {
-		fmt.Println(err)
+		logger.Printf("Error : %s",err)
 		return ""
 	}
 	param, _ := url.ParseQuery(u.RawQuery)
 	itemId := param["goods_id"][0]
 	if len(itemId) == 0 {
-		fmt.Println("商品链接错误，无法解析商品id！")
+		logger.Printf("Error : 商品链接错误，无法解析商品id！: %s", pd.ItemLink)
 		return ""
 	}
-	fmt.Println("pd is :", pd)
+	logger.Println("pd is :", pd)
 	result := utils.GetGoodsPrice(AK, itemId, pd.CommentDiscount)
-	fmt.Println("result price is : ", result)
+	logger.Println("result price is : ", result)
 	return result
 }
 
@@ -198,6 +200,7 @@ func getCommentResult(itemId, minLength, commentPrefix, commentSuffix, commentFi
 
 func exeComment(key string, itemId string, minLength string, filter string, comment string, failTimes int) string {
 	if failTimes > 30 {
+		logger.Printf("Error : %s","登录失效，请重新登录！")
 		return "登录失效，请重新登录！"
 	}
 	page := rand.Intn(29) + 1
@@ -220,16 +223,17 @@ func exeComment(key string, itemId string, minLength string, filter string, comm
 }
 
 func autoDownloadPic(base64Str string) error {
-	fmt.Println("image is :", base64Str)
 	d, _ := base64.StdEncoding.DecodeString(base64Str)
 	timestamp := time.Now().Unix()
 	filename := strconv.FormatInt(timestamp, 10) + ".jpeg"
 	os.Remove(filename)
-	if _, err := os.Create(filename); err != nil {
+	f, err := os.Create(filename)
+	if err != nil {
 		return err
 	}
+	defer f.Close()
 	if err := ioutil.WriteFile(filename, d, 0666); err != nil {
-		fmt.Println(err)
+		logger.Printf("Error : %s",err)
 	}
 	return nil
 }

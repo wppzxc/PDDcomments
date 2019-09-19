@@ -24,6 +24,6 @@ func TestBase64Save(t *testing.T) {
 	os.Remove(filename)
 	os.Create(filename)
 	if err := ioutil.WriteFile(filename, d, 0666); err != nil {
-		fmt.Println(err)
+		logger.Printf("Error : %s",err)
 	}
 }

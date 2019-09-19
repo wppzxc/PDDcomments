@@ -3,6 +3,7 @@ package utils
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/wpp/PDDComments/pkg/log"
 	"github.com/wpp/PDDComments/types"
 	"io/ioutil"
 	"net/http"
@@ -16,6 +17,8 @@ const (
 	commentUrl = "https://mobile.yangkeduo.com/proxy/api/reviews/%s/list?page=%d&size=10&enable_video=1&enable_group_review=1"
 	configFile = "./PDDComments.json"
 )
+
+var logger = log.Logger
 
 func RemoveEmptyComments(comments []types.Comment) []types.Comment {
 	result := make([]types.Comment, 0)
@@ -47,7 +50,7 @@ func GetOnePageComments(key string, itemId string, page int) []types.Comment {
 	req.Header.Add("accesstoken", ak)
 	resp, err := client.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		logger.Printf("Error : %s",err)
 		return nil
 	}
 	defer func() {
@@ -56,7 +59,7 @@ func GetOnePageComments(key string, itemId string, page int) []types.Comment {
 	data, _ := ioutil.ReadAll(resp.Body)
 	tmp := &types.CommentData{}
 	if err := json.Unmarshal(data, tmp); err != nil {
-		fmt.Println(err)
+		logger.Printf("Error : %s",err)
 		return nil
 	}
 	return tmp.Data
@@ -87,8 +90,8 @@ func InitConfig(filename string) {
 		filename = configFile
 	}
 	_, err := os.Stat(filename)
-	fmt.Println(err)
 	if os.IsNotExist(err) {
+		logger.Printf("Error : %s", err)
 		os.Create(filename)
 	}
 }
@@ -99,12 +102,12 @@ func SaveConfig(filename string, json string) {
 	}
 	InitConfig(filename)
 	if err := ioutil.WriteFile(filename, []byte(json), 0755); err != nil {
-		fmt.Println(err)
+		logger.Printf("Error : %s",err)
 	}
 }
 
 func SkipLogin(pd *types.PageData) bool {
-	if len(pd.CheckItemId) == 0 {
+	if len(pd.CheckItemId) == 0 || len(pd.AccessKey) == 0{
 		return false
 	}
 	cms := GetOnePageComments(pd.AccessKey, pd.CheckItemId, 1)

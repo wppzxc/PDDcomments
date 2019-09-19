@@ -1,11 +1,13 @@
 package types
 
 import (
-	"fmt"
 	"github.com/wpp/PDDComments/javascripts"
+	"github.com/wpp/PDDComments/pkg/log"
 	"github.com/zserge/webview"
 	"time"
 )
+
+var logger = log.Logger
 
 type Application struct {
 	WebApp    webview.WebView
@@ -17,7 +19,7 @@ func (app *Application) Login() {
 	time.Sleep(1 * time.Second)
 	app.WebApp.Dispatch(func() {
 		if err := app.WebApp.Eval(javascripts.LoginJS); err != nil {
-			fmt.Println(err)
+			logger.Printf("Error : %s",err)
 		}
 	})
 }
@@ -25,17 +27,17 @@ func (app *Application) Login() {
 func (app *Application) RestAK() {
 	app.WebApp.Dispatch(func() {
 		if err := app.WebApp.Eval(javascripts.ResetAKJS); err != nil {
-			fmt.Println(err)
+			logger.Printf("Error : %s",err)
 		}
-		fmt.Println("初始化AK成功!")
+		logger.Println("初始化AK成功!")
 	})
 }
 
 func (app *Application) CloseLoginPage() {
 	app.WebApp.Dispatch(func() {
 		if err := app.WebApp.Eval(javascripts.CloseLoginPage); err != nil {
-			fmt.Println(err)
+			logger.Printf("Error : %s",err)
 		}
-		fmt.Println("登录成功!")
+		logger.Println("登录成功!")
 	})
 }

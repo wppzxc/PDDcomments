@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="56516067-bd7c-4718-8ba2-d817837bd1d1" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PDDComments.exe" beforeDir="false" afterPath="$PROJECT_DIR$/PDDComments.exe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PDDComments.json" beforeDir="false" afterPath="$PROJECT_DIR$/PDDComments.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/utils/html.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/utils/html.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/utils/html_test.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/utils/html_test.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pkg/utils/util.go" beforeDir="false" afterPath="$PROJECT_DIR$/pkg/utils/util.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/types/base.go" beforeDir="false" afterPath="$PROJECT_DIR$/types/base.go" afterDir="false" />
-    </list>
+    <list default="true" id="56516067-bd7c-4718-8ba2-d817837bd1d1" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,8 +13,23 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pkg/utils/util.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1066">
-              <caret line="115" lean-forward="true" selection-start-line="115" selection-end-line="115" />
+            <state relative-caret-position="160">
+              <caret line="84" column="17" selection-start-line="84" selection-start-column="17" selection-end-line="84" selection-end-column="17" />
+              <folding>
+                <element signature="e#15#142#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="FIRST">
+              <first_editor relative-caret-position="140">
+                <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+              </first_editor>
+              <second_editor />
             </state>
           </provider>
         </entry>
@@ -31,8 +37,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="186" column="25" selection-start-line="186" selection-start-column="25" selection-end-line="186" selection-end-column="25" />
+            <state relative-caret-position="679">
+              <caret line="62" column="26" selection-start-line="62" selection-start-column="26" selection-end-line="62" selection-end-column="26" />
+              <folding>
+                <element signature="e#14#362#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -40,8 +49,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/types/types.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="186">
-              <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
+            <state relative-caret-position="676">
+              <caret line="38" column="29" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
+              <folding>
+                <element signature="e#15#119#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -49,17 +61,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pkg/utils/html.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="14" column="12" lean-forward="true" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
+            <state relative-caret-position="340">
+              <caret line="32" column="51" selection-start-line="32" selection-start-column="51" selection-end-line="32" selection-end-column="51" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pkg/utils/html_test.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
+            <state relative-caret-position="126">
+              <caret line="14" column="20" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -116,7 +128,16 @@
       <find>tmppri</find>
       <find>%s</find>
       <find>cookie</find>
+      <find>klog.Info(</find>
+      <find>klog.Error(</find>
+      <find>klog.Errorf(</find>
+      <find>klog</find>
     </findStrings>
+    <replaceStrings>
+      <replace>logger.Println(</replace>
+      <replace>logger.Printf(&quot;Error : %s&quot;,</replace>
+      <replace>logger.Printf(</replace>
+    </replaceStrings>
   </component>
   <component name="GOROOT" path="D:\software\sdk\go" />
   <component name="Git.Settings">
@@ -126,7 +147,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/javascripts/login.js" />
-        <option value="$PROJECT_DIR$/types/types.go" />
         <option value="$PROJECT_DIR$/resources/js/login.js" />
         <option value="$PROJECT_DIR$/main_test.go" />
         <option value="$PROJECT_DIR$/resources/js/generate.js" />
@@ -138,17 +158,22 @@
         <option value="$PROJECT_DIR$/test/main.go" />
         <option value="$PROJECT_DIR$/javascripts/loginJS.go" />
         <option value="$PROJECT_DIR$/types/base.go" />
-        <option value="$PROJECT_DIR$/pkg/utils/util.go" />
         <option value="$PROJECT_DIR$/PDDComments.json" />
-        <option value="$PROJECT_DIR$/main.go" />
         <option value="$PROJECT_DIR$/pkg/utils/html.go" />
         <option value="$PROJECT_DIR$/pkg/utils/html_test.go" />
+        <option value="$PROJECT_DIR$/PDDComments.exe.manifest" />
+        <option value="$PROJECT_DIR$/pkg/log/log.go" />
+        <option value="$PROJECT_DIR$/types/types.go" />
+        <option value="$PROJECT_DIR$/PDDComments.log" />
+        <option value="$PROJECT_DIR$/main.go" />
+        <option value="$PROJECT_DIR$/pkg/utils/util.go" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
+    <option name="x" value="10" />
+    <option name="y" value="20" />
     <option name="width" value="1346" />
     <option name="height" value="685" />
   </component>
@@ -169,23 +194,7 @@
             <path>
               <item name="PDDComments" type="b2602c69:ProjectViewProjectNode" />
               <item name="PDDComments" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PDDComments" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PDDComments" type="462c0819:PsiDirectoryNode" />
-              <item name="pkg" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PDDComments" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PDDComments" type="462c0819:PsiDirectoryNode" />
-              <item name="pkg" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PDDComments" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PDDComments" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="PDDComments" type="b2602c69:ProjectViewProjectNode" />
@@ -227,7 +236,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Go Test.TestGetGoodsPrice in github.com/wpp/PDDComments/pkg/utils">
+  <component name="RunManager" selected="Go Build.go build main.go">
     <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
       <module name="PDDComments" />
       <working_directory value="$PROJECT_DIR$/" />
@@ -272,8 +281,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Go Test.TestGetGoodsPrice in github.com/wpp/PDDComments/pkg/utils" />
         <item itemvalue="Go Build.go build main.go" />
+        <item itemvalue="Go Test.TestGetGoodsPrice in github.com/wpp/PDDComments/pkg/utils" />
         <item itemvalue="Go Test.TestBase64Save in github.com/wpp/PDDComments/pkg/utils" />
         <item itemvalue="Go Test.TestGetCommentResult in github.com/wpp/PDDComments" />
       </list>
@@ -313,12 +322,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.25340393" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="0" sideWeight="0.49924356" weight="0.32786885" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="0" sideWeight="0.49924356" visible="true" weight="0.33442622" />
       <window_info anchor="bottom" id="Database Changes" order="1" />
       <window_info anchor="bottom" id="Event Log" order="2" sideWeight="0.50075644" side_tool="true" weight="0.32786885" />
       <window_info anchor="bottom" id="Version Control" order="3" weight="0.63442624" />
@@ -326,7 +334,7 @@
       <window_info anchor="bottom" id="Message" order="5" />
       <window_info anchor="bottom" id="Find" order="6" />
       <window_info anchor="bottom" id="Run" order="7" weight="0.32786885" />
-      <window_info anchor="bottom" id="Debug" order="8" weight="0.3180328" />
+      <window_info anchor="bottom" id="Debug" order="8" weight="0.37704918" />
       <window_info anchor="bottom" id="Cvs" order="9" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="10" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="11" />
@@ -393,7 +401,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/comments.exe.manifest" />
-    <entry file="file://$PROJECT_DIR$/PDDComments.exe.manifest" />
     <entry file="file://$PROJECT_DIR$/../../PuerkitoBio/goquery/iteration.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -450,29 +457,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/branch_lorca/mian.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="20" selection-start-column="20" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/1568874837.jpeg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/branch_lorca/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="11" column="5" selection-start-line="11" selection-start-column="5" selection-end-line="11" selection-end-column="5" />
-          <folding>
-            <element signature="e#14#58#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/vendor/vendor.json">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/branch_lorca/mian.go" />
+    <entry file="file://$PROJECT_DIR$/1568874837.jpeg" />
+    <entry file="file://$PROJECT_DIR$/branch_lorca/main.go" />
     <entry file="file://$PROJECT_DIR$/resources/html/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
@@ -515,10 +502,82 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/utils/util.go">
+    <entry file="file://$PROJECT_DIR$/resources/js/login.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1066">
-          <caret line="115" lean-forward="true" selection-start-line="115" selection-end-line="115" />
+        <state relative-caret-position="20">
+          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pkg/utils/html.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="32" column="51" selection-start-line="32" selection-start-column="51" selection-end-line="32" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pkg/utils/html_test.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="14" column="20" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PDDComments.exe.manifest">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="21" column="11" selection-start-line="21" selection-start-column="11" selection-end-line="21" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/software/sdk/go/src/log/log.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="187" column="17" selection-start-line="187" selection-start-column="17" selection-end-line="187" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/types/types.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="676">
+          <caret line="38" column="29" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="29" />
+          <folding>
+            <element signature="e#15#119#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pkg/log/log.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="4" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="4" />
+          <folding>
+            <element signature="e#13#36#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="679">
+          <caret line="62" column="26" selection-start-line="62" selection-start-column="26" selection-end-line="62" selection-end-column="26" />
+          <folding>
+            <element signature="e#14#362#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/vendor.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="8" column="4" selection-start-line="8" selection-start-column="4" selection-end-line="8" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/PDDComments.log">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="10" column="2" selection-start-line="10" selection-start-column="2" selection-end-line="10" selection-end-column="2" />
         </state>
       </provider>
     </entry>
@@ -529,38 +588,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/types/types.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="15" column="24" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/js/login.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="20">
-          <caret line="1" column="13" selection-start-line="1" selection-start-column="13" selection-end-line="1" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="186" column="25" selection-start-line="186" selection-start-column="25" selection-end-line="186" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/utils/html.go">
+    <entry file="file://$PROJECT_DIR$/pkg/utils/util.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
-          <caret line="14" column="12" lean-forward="true" selection-start-line="14" selection-start-column="12" selection-end-line="14" selection-end-column="12" />
+          <caret line="84" column="17" selection-start-line="84" selection-start-column="17" selection-end-line="84" selection-end-column="17" />
+          <folding>
+            <element signature="e#15#142#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pkg/utils/html_test.go">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="14" column="28" selection-start-line="14" selection-start-column="28" selection-end-line="14" selection-end-column="28" />
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="140">
+            <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
